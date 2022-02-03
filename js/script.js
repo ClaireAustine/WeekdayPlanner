@@ -27,22 +27,44 @@
 var currentDay = $("#currentDay")
 var timeBlocksEl = $("#timeblocks")
 
-function currentDay(){
-    // check out moment formats
-    var today= moment()
-    currentDay.text(today);
-}
+
+// check out moment formats
+var today= moment().format('dddd, MMMM Do')
+ currentDay.text(today);
+
+$('.saveBtn').on('click', function (){
+    var value = $(this).siblings('.description').val()
+    var key = $(this).parent().attr('id')
+
+    localStorage.setItem(key , value)
+})
 
 function hours(){
     // 9-5, current hour, past hours, future hours
-    var timeBlocks= moment()
+    var currentHour= moment().hours();
+
+    //loop over each row
+
+    $('.row').each(function(){
+        var timeBlockhour = parseInt($(this).attr('id'))
+
+        if(timeBlockhour < currentHour){
+            $(this).addClass('past')
+        } else if(timeBlockhour === currentHour){
+            $(this).addClass('past')
+        } else{
+            $(this).addClass('future')
+        }
+    })
+
 }
 
+hours()
 //if i know what the current hour is do i need to know what the future and past hours are?
 //do i need to make a separate function for current future and past hours?
 //how do i create and append collumns if theyre elements created using Bootstrap layout? //add class or id?
 //am i supposed to use a for each loop to display each hour?
 //look up jquery ui timeblocks/hourly planner
 // can i create a for each loop that displays each hour and appends a collumn or do they all have to be separate elements in html?
-
+$('#9 .description').val(localStorage.getItem("9"))
 
